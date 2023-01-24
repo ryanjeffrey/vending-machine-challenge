@@ -1,4 +1,5 @@
 const process = require("process");
+const diff = require("waveform-playlist");
 
 let itemCostInput = null;
 let paymentInput = null;
@@ -34,4 +35,41 @@ if (isNaN(payment)) {
   process.exit(1);
 }
 
-console.log(itemCost, payment)
+// get difference of payment - itemCost
+const totalChange = payment - itemCost;
+
+// let variables for value of quarter, dime, and nickel
+let q = 25;
+let d = 10;
+let n = 5;
+
+let result = "";
+
+// create a function that accepts the item cost and payment as arguments
+function vendingMachine(itemCost, payment) {
+  const quarters = Math.floor(totalChange / q);
+  if (quarters > 0) {
+    result += `Quarters: ${quarters}`;
+  }
+
+  const dimes = Math.floor((totalChange - quarters * q) / d);
+  if (dimes > 0) {
+    result += `\nDimes: ${dimes}`;
+  }
+
+  const nickels = Math.floor((totalChange - (quarters * q + dimes * d)) / n);
+  if (nickels > 0) {
+    result += `\nNickels: ${nickels}`;
+  }
+
+  const pennies = Math.floor(
+    totalChange - (quarters * q + dimes * d + nickels * n)
+  );
+  if (pennies > 0) {
+    result += `\nPennies: ${pennies}`;
+  }
+
+  console.log(result, `\nTotal Change: $0.${totalChange}`);
+}
+
+vendingMachine(itemCost, payment);
