@@ -68,7 +68,7 @@ function vendingMachine(itemCost, payment) {
     result += `\nPennies: ${pennies}`;
   }
 
-  console.log(result, `\nTotal Change: $0.${totalChange}`);
+  console.log(result, `\nTotal Change: $0.${Math.trunc(totalChange)}`);
 }
 
 vendingMachine(itemCost, payment);
